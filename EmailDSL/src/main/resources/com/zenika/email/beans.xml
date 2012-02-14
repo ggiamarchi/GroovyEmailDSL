@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" >
+
+	<bean id="emailSenderStub" class="com.zenika.email.impl.EmailSenderStub" />
+ 
+ 	<bean id="emailSender" class="com.zenika.email.impl.EmailSenderImpl" scope="prototype" >
+		<property name="sender" ref="springMailSender" />
+		<property name="message" ref="templateMessageHelper" />
+		<property name="logEmailConsole" value="true" />
+	</bean>
+
+	<bean id="springMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" scope="prototype" >
+		<property name="host" value="smtp.free.fr" />
+		<property name="port" value="25" />
+		<property name="protocol" value="smtp" />
+	</bean>
+
+	<bean id="templateMessageHelper" class="org.springframework.mail.javamail.MimeMessageHelper" scope="prototype" >
+		<constructor-arg >
+			<bean class="javax.mail.internet.MimeMessage" scope="prototype"
+				  factory-bean="springMailSender" factory-method="createMimeMessage" />
+		</constructor-arg>
+		<constructor-arg type="boolean"  value="true" /> <!-- Whether the message is multipart or not -->
+		<property name="subject" value="(no subject)" />
+	</bean>
+	
+</beans>
