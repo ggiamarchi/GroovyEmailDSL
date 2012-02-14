@@ -6,6 +6,9 @@ import org.springframework.mail.javamail.MimeMessageHelper
 
 import com.zenika.email.EmailSender
 
+/**
+ * Implementation using the Spring email API
+ */
 class EmailSenderImpl implements EmailSender {
 
 	private def to = []
@@ -15,7 +18,11 @@ class EmailSenderImpl implements EmailSender {
 
 	private JavaMailSender sender
 	private MimeMessageHelper message
-	private boolean logEmailConsole = false;
+	
+	/**
+	 * Whether the email will be logged on stdout or not before it will be send
+	 */
+	private boolean logEmailConsole = false
 
 	def setSender(def sender) {
 		this.sender = sender

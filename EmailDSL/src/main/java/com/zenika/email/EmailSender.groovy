@@ -1,5 +1,8 @@
-package com.zenika.email;
+package com.zenika.email
 
+/**
+ * Definition of an email sender
+ */
 interface EmailSender {
     def setFrom(String from)
 	def addTo(String recipient)

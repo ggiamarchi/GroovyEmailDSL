@@ -1,15 +1,26 @@
-package com.zenika.email.dsl;
+package com.zenika.email.dsl
 
 import com.zenika.email.EmailSender
 import com.zenika.email.EmailSenderProvider
 
 import groovy.transform.EqualsAndHashCode
 
+/**
+ * DSL Implementation
+ */
 @EqualsAndHashCode
 class Email {
 
+	/**
+	 * Delegate responsible of sending emails
+	 */
 	private EmailSender sender = EmailSenderProvider.getSender()
 
+	/**
+	 * Unique entry point of this DSL
+	 * @param closure
+	 * @return
+	 */
     def static send(Closure closure) {
 		Email email = new Email()
 		closure.delegate = email

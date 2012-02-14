@@ -1,7 +1,10 @@
 package com.zenika.email.impl
 
-import com.zenika.email.EmailSender;
+import com.zenika.email.EmailSender
 
+/**
+ * Stub for DSL Testing only
+ */
 class EmailSenderStub implements EmailSender {
 
 	def setFrom(String from) {

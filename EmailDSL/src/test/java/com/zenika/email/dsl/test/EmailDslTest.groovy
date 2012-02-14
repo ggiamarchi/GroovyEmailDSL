@@ -2,11 +2,14 @@ package com.zenika.email.dsl.test
 
 import groovy.util.GroovyTestCase
 
-import com.zenika.email.EmailSenderProvider;
+import com.zenika.email.EmailSenderProvider
 import com.zenika.email.dsl.Email
 
 class EmailDslTest extends GroovyTestCase {
 
+	/**
+	 * Test DSL only (stub mode)
+	 */
 	void testEmailDslOnly() {
 		EmailSenderProvider.setStub(true) // Stub mode enabled. Will not send an email.
 		Email.send {
@@ -20,6 +23,9 @@ class EmailDslTest extends GroovyTestCase {
 		}
 	}
 
+	/**
+	 * Test DSL + email sending
+	 */
 	void testSendEmail() {
 		EmailSenderProvider.setStub(false) // Stub mode disabled. An email will be send.
 		Email.send {
