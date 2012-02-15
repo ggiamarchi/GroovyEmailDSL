@@ -11,6 +11,6 @@ interface EmailSender {
 	def setSubject(String subject)
 	def setBody(String body)
 	def addAttach(String file)
-	def log()
+	def setOptions(Options options)
 	def send()
 }

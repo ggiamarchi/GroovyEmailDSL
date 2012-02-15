@@ -1,14 +1,15 @@
 package com.zenika.email.dsl
 
+import com.zenika.email.Options;
 import com.zenika.email.EmailSender
 import com.zenika.email.EmailSenderProvider
 
 import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 
 /**
  * DSL Implementation
  */
-@EqualsAndHashCode
 class Email {
 
 	/**
@@ -56,12 +57,12 @@ class Email {
 		sender.addAttach(uri)
 	}
 	
-	def log() {
-		sender.log()
-	}
-	
 	def send() {
 		sender.send()
+	}
+	
+	def optional(Map map) {
+		sender.setOptions(new Options(map))
 	}
 
 }

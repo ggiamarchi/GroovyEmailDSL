@@ -1,23 +1,38 @@
 package com.zenika.email.impl
 
+import groovy.transform.ToString;
+
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.mail.MailException
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
 
+import com.zenika.email.Options;
 import com.zenika.email.EmailSender
 
 /**
  * Implementation using the Spring email API
  */
+@ToString(
+	includeNames=true,
+	includeFields=true,
+	excludes="sender, message, logEmailConsole"
+)
 class EmailSenderImpl implements EmailSender {
 
+	private String from
 	private def to = []
 	private def cc = []
 	private def bcc = []
+	private String subject
+	private String body
 	private def attachedFile = []
 
 	private JavaMailSender sender
 	private MimeMessageHelper message
+	
+	private Options options
 	
 	/**
 	 * Whether the email will be logged on stdout or not before it will be send
@@ -36,8 +51,49 @@ class EmailSenderImpl implements EmailSender {
 		this.logEmailConsole = logEmailConsole
 	}
 	
+	def setFrom(String from) {
+		this.from = from
+	}
+
+	def addTo(String recipient) {
+		to << recipient
+	}
+
+	def addCc(String recipient) {
+		cc << recipient
+	}
+
+	def addBcc(String recipient) {
+		bcc << recipient
+	}
+
+	def setSubject(String subject) {
+		this.subject = subject
+	}
+
+	def setBody(String body) {
+		this.body = body
+	}
+
+	def addAttach(String file) {
+		attachedFile << file
+	}
+
+	def setOptions(Options options) {
+		this.options = options
+	}
+
 	def send() {
-		message.setTo(to as String[])		
+		options?.headers.each {
+			name, value -> message.mimeMessage.setHeader(name, value)
+		}
+		message.setText(body, options?.html ? options.html : false)
+		if (options?.important) {
+			message.setPriority(1)
+		}
+		message.setFrom(from)
+		message.setSubject(subject)
+		message.setTo(to as String[])
 		message.setBcc(bcc as String[])
 		message.setCc(cc as String [])
 		attachedFile.each {
@@ -54,43 +110,16 @@ class EmailSenderImpl implements EmailSender {
 			throw new RuntimeException(ex)
 		}
 	}
-
-	def setFrom(String from) {
-		message.setFrom(from)
-	}
-
-	def addTo(String recipient) {
-		to << recipient
-	}
-
-	def addCc(String recipient) {
-		cc << recipient
-	}
-
-	def addBcc(String recipient) {
-		bcc << recipient
-	}
-
-	def setSubject(String subject) {
-		message.setSubject(subject)
-	}
-
-	def setBody(String body) {
-		message.setText(body)
-	}
-
-	def addAttach(String file) {
-		attachedFile << file
-	}
-
-	def log() {
-		println "from     : ${message.mimeMessage.from}"
+	
+	private void log() {
+		println "from     : ${from}"
 		println "to       : ${to}"
 		println "cc       : ${cc}"
 		println "bcc      : ${bcc}"
-		println "subject  : ${message.mimeMessage.subject}"
-		println "body     : ${message.mimeMultipart.getBodyPart(0).content}"
+		println "subject  : ${subject}"
+		println "body     : ${body}"
 		println "attached : ${attachedFile}"
+		println "optional : ${options}"
 	}
 
 }

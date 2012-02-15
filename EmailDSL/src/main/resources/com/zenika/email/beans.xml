@@ -13,7 +13,7 @@
 		<property name="logEmailConsole" value="true" />
 	</bean>
 
-	<bean id="springMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" scope="prototype" >
+	<bean id="springMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
 		<property name="host" value="smtp.free.fr" />
 		<property name="port" value="25" />
 		<property name="protocol" value="smtp" />

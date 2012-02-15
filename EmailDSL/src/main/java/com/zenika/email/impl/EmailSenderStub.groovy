@@ -1,5 +1,6 @@
 package com.zenika.email.impl
 
+import com.zenika.email.Options;
 import com.zenika.email.EmailSender
 
 /**
@@ -8,39 +9,39 @@ import com.zenika.email.EmailSender
 class EmailSenderStub implements EmailSender {
 
 	def setFrom(String from) {
-		println "EmailSenderStub.setFrom()"
+		println "EmailSenderStub.setFrom     : ${from}"
 	}
 
 	def addTo(String recipient) {
-		println "EmailSenderStub.addTo()"
+		println "EmailSenderStub.addTo       : ${recipient}"
 	}
 
 	def addCc(String recipient) {
-		println "EmailSenderStub.addCc()"
+		println "EmailSenderStub.addCc       : ${recipient}"
 	}
 
 	def addBcc(String recipient) {
-		println "EmailSenderStub.addBcc()"
+		println "EmailSenderStub.addBcc      : ${recipient}"
 	}
 
 	def setSubject(String subject) {
-		println "EmailSenderStub.setSubject()"
+		println "EmailSenderStub.setSubject  : ${subject}"
 	}
 
 	def setBody(String body) {
-		println "EmailSenderStub.setBody()"
+		println "EmailSenderStub.setBody     : ${body}"
 	}
 
 	def addAttach(String file) {
-		println "EmailSenderStub.addAttach()"
+		println "EmailSenderStub.addAttach   : ${file}"
 	}
 
-	def log() {
-		println "EmailSenderStub.log()"
+	def setOptions(Options options) {
+		println "EmailSenderStub.setOptions  : ${options}"
 	}
-
+	
 	def send() {
-		println "EmailSenderStub.send()"
+		println "EmailSenderStub.send"
 	}
 
 }
