@@ -2,8 +2,16 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans
-	   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" >
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	                       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd" >
+
+	<util:properties id="beans" location="classpath:com/zenika/email/beans.properties" />
+
+	<bean id="emailSenderProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces" value="com.zenika.email.EmailSender" />
+		<property name="target" ref="#{beans.emailSender}" />
+	</bean>
 
 	<bean id="emailSenderStub" class="com.zenika.email.impl.EmailSenderStub" />
  
