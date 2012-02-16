@@ -8,7 +8,7 @@
 
 	<util:properties id="beans" location="classpath:com/zenika/email/beans.properties" />
 
-	<bean id="emailSenderProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+	<bean id="emailSenderProxy" class="org.springframework.aop.framework.ProxyFactoryBean" scope="prototype" >
 		<property name="proxyInterfaces" value="com.zenika.email.EmailSender" />
 		<property name="target" ref="#{beans.emailSender}" />
 	</bean>
@@ -28,11 +28,10 @@
 	</bean>
 
 	<bean id="templateMessageHelper" class="org.springframework.mail.javamail.MimeMessageHelper" scope="prototype" >
-		<constructor-arg >
-			<bean class="javax.mail.internet.MimeMessage" scope="prototype"
-				  factory-bean="springMailSender" factory-method="createMimeMessage" />
+		<constructor-arg>
+			<bean class="javax.mail.internet.MimeMessage" scope="prototype" factory-bean="springMailSender" factory-method="createMimeMessage" />
 		</constructor-arg>
-		<constructor-arg type="boolean"  value="true" /> <!-- Whether the message is multipart or not -->
+		<constructor-arg type="boolean" value="true" /> <!-- Whether the message is multipart or not -->
 		<property name="subject" value="(no subject)" />
 	</bean>
 	
